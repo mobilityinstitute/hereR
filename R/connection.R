@@ -141,7 +141,7 @@ connection <- function(origin, destination, datetime = Sys.time(),
   # Create sf object
   return(
     sf::st_as_sf(
-      as.data.frame(routes),
+      tibble::as_tibble(routes),
       sf_column_name = "geometry",
       crs = 4326
     )
@@ -154,8 +154,8 @@ connection <- function(origin, destination, datetime = Sys.time(),
 
   # Routes
   template <- data.table::data.table(
-    id = numeric(),
-    rank = numeric(),
+    id = integer(),
+    rank = integer(),
     departure = character(),
     origin = character(),
     arrival = character(),
@@ -165,8 +165,8 @@ connection <- function(origin, destination, datetime = Sys.time(),
     vehicle = character(),
     provider = character(),
     direction = character(),
-    distance = integer(),
-    duration = integer(),
+    distance = units::set_units(integer(), "m"),
+    duration = units::set_units(integer(), "s"),
     geometry = character()
   )
   routes <- data.table::rbindlist(
@@ -202,8 +202,8 @@ connection <- function(origin, destination, datetime = Sys.time(),
                 vehicle = sec$transport$name,
                 provider = sec$agency$name,
                 direction = sec$transport$headsign,
-                distance = sec$travelSummary$length,
-                duration = sec$travelSummary$duration,
+                distance = units::set_units(sec$travelSummary$length, "m"),
+                duration = units::set_units(sec$travelSummary$duration, "s"),
                 geometry = sec$polyline
               )
             }), fill = TRUE)
