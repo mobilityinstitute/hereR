@@ -23,8 +23,11 @@ Imports:
     data.table (>= 1.12.6),
     flexpolyline (>= 0.1.1),
     jsonlite (>= 1.7.0),
+    magrittr (>= 1.5),
     sf (>= 0.9-0),
-    stringr (>= 1.4.0)
+    stringr (>= 1.4.0),
+    tibble (>= 3.0.1),
+    units (>= 0.6-0)
 Suggests:
     covr (>= 3.5.0),
     ggplot2 (>= 3.3.2),
